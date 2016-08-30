@@ -40,6 +40,7 @@ public:
     public:
         
         Circle():
+        uid(0),
         pos(0, 0),
         radius(0),
         radiusMin(0),
@@ -55,6 +56,7 @@ public:
         float getRadiusNext() const { return radius + radiusGrowth + gap; }
         float getRadiusMax() const { return radiusMax + gap; }
         
+        unsigned int uid; // unique id.
         glm::vec2 pos;
         float radius;
         float radiusMin;
