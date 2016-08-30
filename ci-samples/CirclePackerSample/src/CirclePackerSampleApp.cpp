@@ -41,7 +41,10 @@ void CirclePackerSampleApp::update() {
         float radiusGrowth = (radiusMax - radiusMin) / 100.0;
         float gap = 1.0;
         
-        circlePacker->addCircle(x, y, radiusMin, radiusMax, radiusGrowth, gap);
+        const coc::CirclePacker::CircleRef & circleRef = circlePacker->addCircle(x, y, radiusMin, radiusMax, radiusGrowth, gap);
+        coc::ciCirclePacker::ciCircle * circle = (coc::ciCirclePacker::ciCircle *)circleRef.get();
+        circle->colorFill = ci::ColorA(0.9, 0.9, 0.9, 1.0);
+        circle->colorStroke = ci::ColorA(0.0, 0.0, 0.0, 1.0);
     }
     
     circlePacker->update();

@@ -28,16 +28,16 @@ void CirclePacker::reset() {
 }
 
 //--------------------------------------------------------------
-const CirclePacker::CircleRef & CirclePacker::addCircle(const CircleRef & circle) {
+CirclePacker::CircleRef & CirclePacker::addCircle(const CircleRef & circle) {
     circlesToAdd.push_back(circle);
     return circlesToAdd.back();
 }
 
-const CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float radius, float gap) {
+CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float radius, float gap) {
     return addCircle(x, y, radius, radius, 0, gap);
 }
 
-const CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float radiusMin, float radiusMax, float radiusGrowth, float gap) {
+CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float radiusMin, float radiusMax, float radiusGrowth, float gap) {
     CircleRef circle = initCircle();
     circle->pos.x = x;
     circle->pos.y = y;
@@ -49,11 +49,11 @@ const CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float 
     return addCircle(circle);
 }
 
-const CirclePacker::CircleRef & CirclePacker::addCircleToRandomPositionWithinBounds(float radius, const coc::Rect & bounds, float gap) {
+CirclePacker::CircleRef & CirclePacker::addCircleToRandomPositionWithinBounds(float radius, const coc::Rect & bounds, float gap) {
     return addCircleToRandomPositionWithinBounds(radius, radius, 0, bounds, gap);
 }
 
-const CirclePacker::CircleRef & CirclePacker::addCircleToRandomPositionWithinBounds(float radiusMin, float radiusMax, float radiusGrowth, const coc::Rect & bounds, float gap) {
+CirclePacker::CircleRef & CirclePacker::addCircleToRandomPositionWithinBounds(float radiusMin, float radiusMax, float radiusGrowth, const coc::Rect & bounds, float gap) {
     float x = coc::rand(bounds.getX(), bounds.getX() + bounds.getW());
     float y = coc::rand(bounds.getY(), bounds.getY() + bounds.getH());
     return addCircle(x, y, radiusMin, radiusMax, radiusGrowth, gap);
@@ -100,8 +100,8 @@ void CirclePacker::update(float timeDelta) {
             }
 			
             float d  = glm::length(c1->pos - c2->pos);
-            float r1 = (c1->bAlive == true) ? c1->getRadiusNext() : c1->getRadius();
-            float r2 = (c2->bAlive == true) ? c2->getRadiusNext() : c2->getRadius();
+            float r1 = c1->bAlive ? c1->getRadiusNext() : c1->getRadius();
+            float r2 = c2->bAlive ? c2->getRadiusNext() : c2->getRadius();
             float r  = r1 + r2;
             
             if(r >= d) {

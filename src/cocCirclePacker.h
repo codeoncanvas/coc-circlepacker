@@ -72,11 +72,11 @@ public:
     
     void reset();
     
-    const CircleRef & addCircle(const CircleRef & circle);
-    const CircleRef & addCircle(float x, float y, float radius, float gap=0);
-	const CircleRef & addCircle(float x, float y, float radiusMin, float radiusMax, float radiusGrowth, float gap=0);
-    const CircleRef & addCircleToRandomPositionWithinBounds(float radius, const coc::Rect & bounds, float gap=0);
-    const CircleRef & addCircleToRandomPositionWithinBounds(float radiusMin, float radiusMax, float radiusGrowth, const coc::Rect & bounds, float gap=0);
+    CircleRef & addCircle(const CircleRef & circle);
+    CircleRef & addCircle(float x, float y, float radius, float gap=0);
+	CircleRef & addCircle(float x, float y, float radiusMin, float radiusMax, float radiusGrowth, float gap=0);
+    CircleRef & addCircleToRandomPositionWithinBounds(float radius, const coc::Rect & bounds, float gap=0);
+    CircleRef & addCircleToRandomPositionWithinBounds(float radiusMin, float radiusMax, float radiusGrowth, const coc::Rect & bounds, float gap=0);
     
     std::vector<CircleRef> & getCircles() { return circles; }
     
