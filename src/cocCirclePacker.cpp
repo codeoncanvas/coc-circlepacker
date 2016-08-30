@@ -28,16 +28,17 @@ void CirclePacker::reset() {
 }
 
 //--------------------------------------------------------------
-void CirclePacker::addCircle(const CircleRef & circle) {
+const CirclePacker::CircleRef & CirclePacker::addCircle(const CircleRef & circle) {
     circlesToAdd.push_back(circle);
+    return circlesToAdd.back();
 }
 
-void CirclePacker::addCircle(float x, float y, float radius, float gap) {
-    addCircle(x, y, radius, radius, 0, gap);
+const CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float radius, float gap) {
+    return addCircle(x, y, radius, radius, 0, gap);
 }
 
-void CirclePacker::addCircle(float x, float y, float radiusMin, float radiusMax, float radiusGrowth, float gap) {
-    CircleRef circle(new Circle());
+const CirclePacker::CircleRef & CirclePacker::addCircle(float x, float y, float radiusMin, float radiusMax, float radiusGrowth, float gap) {
+    CircleRef circle = initCircle();
     circle->pos.x = x;
     circle->pos.y = y;
     circle->radius = radiusMin;
@@ -45,28 +46,17 @@ void CirclePacker::addCircle(float x, float y, float radiusMin, float radiusMax,
     circle->radiusMax = radiusMax;
     circle->radiusGrowth = radiusGrowth;
     circle->gap = gap;
-    addCircle(circle);
+    return addCircle(circle);
 }
 
-void CirclePacker::addCircleToRandomPositionWithinBounds(float radius, const coc::Rect & bounds, float gap) {
-    addCircleToRandomPositionWithinBounds(radius, radius, 0, bounds, gap);
+const CirclePacker::CircleRef & CirclePacker::addCircleToRandomPositionWithinBounds(float radius, const coc::Rect & bounds, float gap) {
+    return addCircleToRandomPositionWithinBounds(radius, radius, 0, bounds, gap);
 }
 
-void CirclePacker::addCircleToRandomPositionWithinBounds(float radiusMin, float radiusMax, float radiusGrowth, const coc::Rect & bounds, float gap) {
-    bool bFits = true;
-    bFits = bFits && (bounds.getW() >= radiusMin * 2);
-    bFits = bFits && (bounds.getH() >= radiusMin * 2);
-    if(bFits == false) {
-        return;
-    }
-
-    coc::Rect rect = bounds;
-    rect.grow(-radiusMin);
-    
-    float x = coc::rand(rect.getX(), rect.getX() + rect.getW());
-    float y = coc::rand(rect.getY(), rect.getY() + rect.getH());
-    
-    addCircle(x, y, radiusMin, radiusMax, radiusGrowth, gap);
+const CirclePacker::CircleRef & CirclePacker::addCircleToRandomPositionWithinBounds(float radiusMin, float radiusMax, float radiusGrowth, const coc::Rect & bounds, float gap) {
+    float x = coc::rand(bounds.getX(), bounds.getX() + bounds.getW());
+    float y = coc::rand(bounds.getY(), bounds.getY() + bounds.getH());
+    return addCircle(x, y, radiusMin, radiusMax, radiusGrowth, gap);
 }
 
 //--------------------------------------------------------------
